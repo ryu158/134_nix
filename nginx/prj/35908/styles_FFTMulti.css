@@ -1,0 +1,88 @@
+        .button {
+            display: inline-block;
+            padding: 5px 5px;
+            background-color: #5D6D7E ;
+            color: #D6DBDF;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            width: 100px;
+        }
+        .button-1 {
+            display: inline-block;
+            padding: 5px 5px;
+            background-color: #5D6D7E ;
+            color: #E6B0AA;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            width: 100px;
+        }
+
+        .container-nav {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            background-color: #85929E;
+            width: 5.8%;
+            text-align: center;
+            padding: 5px;
+            float: left;
+            overflow: hidden; /* Clear the float */
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+        .container-csv {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            width: 12.5%;
+            padding: 10px;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .container-table {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            width: 10.8%;
+            padding: 10px;
+            text-align: center;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .container-empty {
+            width: 0.3%;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .chart-container {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            width: 29%;
+            padding: 1px;
+            text-align: center;
+            float: left;
+        }
+        .container-setting {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            width: 13.6%;
+            padding: 10px;
+            text-align: center;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
