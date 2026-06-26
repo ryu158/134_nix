@@ -30,8 +30,8 @@
 
           http {
             server {
-              listen 80;
-              listen [::]:80;
+              listen 8080;
+              listen [::]:8080;
 	      server_name ryuora134.duckdns.org;
 	      return 301 https://''$host''$request_uri;
             }
@@ -232,7 +232,6 @@
            sudo systemctl stop nginx
            sudo systemctl stop nginx.socket
            sudo pkill -9 nginx
-           pkill -9 syncthing
 
            # Loop through each domain and run an independent Certbot instance
            for dom in "$@"; do
@@ -248,23 +247,20 @@
              echo "✨ Finished certificate for: $dom"
            done
 
-           echo "🔄 Restarting web and sync services..."
            echo "sudo systemctl start nginx.socket"
            echo "sudo systemctl start nginx"
         
-           if [ -f ~/.config/syncthing/config.xml ]; then
-             nohup syncthing -no-browser > ~/.config/syncthing/syncthing.log 2>&1 &
-           fi
-
            echo "✅ All isolated SSL certificates have been generated successfully!"
 
-            # 1. Grant the 'nginx' user access to the live and archive directories
-            sudo setfacl -R -m u:nginx:rx /etc/letsencrypt/live/
-            sudo setfacl -R -m u:nginx:rx /etc/letsencrypt/archive/
 
-	    # 2. Set the default ACL so any future renewed certificates automatically inherit these permissions
-            sudo setfacl -R -d -m u:nginx:rx /etc/letsencrypt/live/
-            sudo setfacl -R -d -m u:nginx:rx /etc/letsencrypt/archive/
+	   [ ! -d /etc/letsencrypt/live/ ] && sudo mkdir -p /etc/letsencrypt/live/
+	   [ ! -d /etc/letsencrypt/archive/ ] && sudo mkdir -p /etc/letsencrypt/archive/
+
+	   sudo setfacl -R -m u:nginx:rx /etc/letsencrypt/live/
+	   sudo setfacl -R -d -m u:nginx:rx /etc/letsencrypt/live/
+
+	   sudo setfacl -R -m u:nginx:rx /etc/letsencrypt/archive/
+	   sudo setfacl -R -d -m u:nginx:rx /etc/letsencrypt/archive/
 
 	    # getfacl /etc/letsencrypt/live/ -> user:nginx:r-x
       '';
