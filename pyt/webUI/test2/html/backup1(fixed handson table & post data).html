@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
+</head>
+<body>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+    <div id="example"></div>
+    <script>
+        const data = [
+        ['', 'Tesla', 'Volvo', 'Toyota', 'Ford'],
+        ['2019', 10, 11, 12, 13],
+        ['2020', 20, 11, 14, 13],
+        ['2021', 30, 15, 12, 13]
+        ];
+
+        const container = document.getElementById('example');
+        const hot = new Handsontable(container, {
+        data: data,
+        rowHeaders: true,
+        colHeaders: true,
+        height: 'auto',
+        licenseKey: 'non-commercial-and-evaluation' // for non-commercial use only
+        });
+    </script>
+
+    <button onclick="calculate()">Add Numbers</button><br><br>
+    <p>Result: <span id="result"></span></p>
+
+    <script>
+        async function calculate() {
+            var num1 = hot.getDataAtCell(2,2)
+            // const num2 = 0
+            var num2 = hot.getDataAtCell(2,3)
+            var col2 = hot.getDataAtCol(2)
+            var data0 = hot.getData()
+
+            const response = await fetch('http://192.168.12.135:6969/add1', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data0)
+            });
+
+            const data = await response.json();
+            document.getElementById('result').innerText = data.result;
+        }
+    </script>
+
+</body>
+</html>
+
+
+                <!-- body: JSON.stringify({ num1: num1, num2: num2 }) -->
+
+                <!-- body: JSON.stringify(nums) -->

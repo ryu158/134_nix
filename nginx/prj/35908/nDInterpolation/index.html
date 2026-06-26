@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Movable Panel</title>
+  <!-- <script type="text/javascript" src="../jquery-easyui-1.10.19/jquery.min.js"></script> -->
+  <!-- <script type="text/javascript" src="../jquery-easyui-1.10.19/jquery.easyui.min.js"></script> -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+</head>
+<body>
+  <button style="margin-left:979px; margin-top:2px" onclick="calculate()">calculate</button>
+  <button style="margin-left:0px; margin-top:2px" onclick="calculate_internal_engine()">calculate(internal Engine)</button>
+  <button style="margin-left:0px; margin-top:2px" onclick="updatePlot(plotInputs_plot)">plot(inputs)</button>
+  <button style="margin-left:0px; margin-top:2px" onclick="updatePlot2(plotOutput_plot)">plot(output)</button>
+
+
+  <script src="./tableSettings.js"></script>
+  <script src="./plotSettings.js"></script>
+  <script src="./classes.js"></script>
+  <script src="./functions.js"></script>
+  <!-- <script src="./actions.js"></script> -->
+  <script src="./script.js"></script>
+</body>
+</html>

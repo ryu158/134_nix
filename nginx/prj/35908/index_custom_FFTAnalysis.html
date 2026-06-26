@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSV to Table and Scatter Chart</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
+    <link rel="stylesheet" href="./styles_custom_FFTAnalysis.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+    <!-- <script type="text/javascript" src="../jquery-easyui-1.10.19/jquery.min.js"></script> -->
+    <!-- <script type="text/javascript" src="../jquery-easyui-1.10.19/jquery.easyui.min.js"></script> -->
+
+</head>
+<body>
+
+<div class="container-nav">
+    <object type="text/html" data="./index_common_custom_navbar.html" style="width: 100%; height: 100%;"></object>
+</div>
+
+    <div class="container-grid0">
+        <div class="item">
+        </div>
+
+        <div class="item" id="dynUI1">
+        </div>
+
+        <div class="item" id="dynUI2">
+        </div>
+
+        <div class="itemChart" id="dynUI3">
+        </div>
+
+        <div class="itemChart" id="dynUI4">
+        </div>
+    </div>
+
+
+
+
+
+<!--//////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <script src="./script_dynamicUI_class.js"></script>
+    <script src="./script_custom_FFTAnalysis_dynUI.js"></script>
+    <script src="./script_custom_FFTAnalysis_functions.js"></script>
+    <script src="./script_custom_FFTAnalysis_actions.js"></script>
+</body>
+</html>
+
+
+
+<!-- https://handsontable.com/docs/javascript-data-grid/numeric-cell-type/ -->

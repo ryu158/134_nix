@@ -1,0 +1,12 @@
+        .container-FFTtable {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            width: 19.0%;
+            padding: 10px;
+            text-align: center;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }

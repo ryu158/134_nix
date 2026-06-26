@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSV to Table and Scatter Chart</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
+    <link rel="stylesheet" href="./styles_custom_OSigmaP.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+</head>
+<body>
+
+<!-- Navigator ///////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!-- <div class="container-nav"> -->
+    <!--         <h3 style="color: #D5DBDB;"> Analysis tools </h3> -->
+    <!--         <a href="./index.html" target="_blank" class="button">home</a> -->
+    <!--         <a href="./index_custom_sensitivity.html" target="_blank" class="button">sensitivity</a> -->
+    <!--         <a href="./index_custom_OSigmaP.html" target="_blank" class="button-1">OSigmaP</a> -->
+    <!-- </div> -->
+
+    <div class="container-nav">
+        <object type="text/html" data="./index_common_custom_navbar.html" style="width: 100%; height: 100%;"></object>
+    </div>
+
+
+<!-- tables /////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+
+    <div class="container-grid0">
+
+        <div class="item">
+            <div class="container-grid2">
+                <div class="item">
+                    <h1>Input</h1>
+                    <label for="load1">Load: </label>
+                    <input type="file" id="load1" accept=".csv">
+                    <button onclick="exportToCSV('table1')">export</button> <br> <br>
+                    <div id="table0"></div>
+                    <div id="table1"></div>
+                </div>
+
+                <div class="item">
+                    <h1>noise</h1>
+                    <label for="load2">Load: </label>
+                    <input type="file" id="load2" accept=".csv">
+                    <button onclick="exportToCSV('table2')">export</button> <br> <br>
+                    <button onclick="genNoiseData()">generate noise data</button>
+                    <label for="label1"> sample#: </label>
+                    <input type="text" size="1" value="10" style="text-align: center;" id="sampleNum">
+                    <label for="label2">,  1 Sigma(%):</label>
+                    <input type="text" size="1" value="5" style="text-align: center;" id="oneSigma"> <br> <br>
+                    <div id="table2"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="item">
+            <div class="container-grid2">
+                <div class="item">
+                    <h1>sensitivity</h1>
+                    <label for="load3">Load: </label>
+                    <input type="file" id="load3" accept=".csv">
+                    <button onclick="exportToCSV('table3')">export</button> <br> <br>
+                    <button onclick="calSensitivity()">generate sensitivity</button>
+                    <button onclick="drawchart1(); drawchart2(); drawchart3(); ">refresh graphs</button>
+                    <br> <br>
+                    <div id="table3"></div>
+                </div>
+
+                <div class="item">
+                    <h1>covariance(CovY)</h1>
+                    <label for="load4">Load: </label>
+                    <input type="file" id="load4" accept=".csv">
+                    <button onclick="exportToCSV('table4')">export</button> <br> <br>
+                    <button onclick="genCovY()">generate CovY</button>
+                    <label for="option-fromNoise">
+                        <input type="radio" id="option-fromNoise" name="optionsCovY" value="fromNoise" onchange="genCovY();" >
+                        fromNoise
+                    </label>
+                    <label for="option-rand">
+                        <input type="radio" id="option-rand" name="optionsCovY" value="rand" onchange="genCovY()">
+                        rand
+                    </label>
+                    <label for="option-unit">
+                        <input type="radio" id="option-unit" name="optionsCovY" value="unit" onchange="genCovY()" checked>
+                        unit
+                    </label>
+                    <button onclick="drawDotChart1()">plot</button>
+                    <br> <br>
+
+                    <div id="table4"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="item">
+            <div class="container-grid1">
+                <div class="item">
+                    <h2>axis setting</h2>
+                    <div id="axisTable"></div>
+                    <button onclick="modifyRange(); calCorRange();">adopt</button>
+                    <input type="checkbox" id="checkKeepAxis" value="">
+                    <label for="label1">keep applying axis setting</label>
+                    <button onclick="showAll();">show table</button>
+                </div>
+
+                <div class="item">
+                    <h2>correlation_table</h2>
+                    <div id="correlationTable"></div>
+                </div>
+
+                <div class="item">
+                    <h2>OSigmaP_table</h2>
+                    <button style="color: red;" onclick="calOSigmaP();">cal OSigmaP</button>
+                    <label for="option-OSP,SP">
+                        <input type="radio" id="option-OSP,SP" name="optionsOSigmaP" value="OSP,SP" onchange="calOSigmaP()" checked>
+                        OSP,SP
+                    </label>
+                    <label for="option-G">
+                        <input type="radio" id="option-G" name="optionsOSigmaP" value="G" onchange="calOSigmaP()">
+                        G
+                    </label>
+                    <label for="option-covP">
+                        <input type="radio" id="option-covP" name="optionsOSigmaP" value="covP" onchange="calOSigmaP()">
+                        covP
+                    </label> <br> <br>
+
+                    <div id="oSigmaPTable"></div>
+                </div>
+
+                <div class="item">
+                    <h1>weight</h1>
+                    <label for="load5">Load: </label>
+                    <input type="file" id="load5" accept=".csv">
+                    <button onclick="exportToCSV('table5')">export</button> <br> <br>
+                    <button onclick="genWeight()">generate weight</button>
+                    <label for="option-unitw">
+                        <input type="radio" id="option-unitw" name="optionsWeight" value="unit" onchange="genWeight()" checked>
+                        unit
+                    </label>
+                    <label for="option-randw">
+                        <input type="radio" id="option-randw" name="optionsWeight" value="rand" onchange="genWeight()">
+                        rand
+                    </label>
+                    <label for="option-covInverse">
+                        <input type="radio" id="option-covInverse" name="optionsWeight" value="covP-1" onchange="genWeight()">
+                        covP-1
+                    </label>
+                    <button onclick="drawDotChart2()">plot</button>
+                    <br> <br>
+
+                    <div id="table5"></div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="item">
+            <div class="container-grid3">
+                <div class="itemChart">
+                    <h2>p1 (sensitivity)</h2>
+                    <canvas id="myChart" width="280" height="125"></canvas>
+                </div>
+
+                <div class="itemChart">
+                    <h2>p2 (sensitivity)</h2>
+                    <canvas id="myChart2" width="280" height="125"></canvas>
+                </div>
+
+                <div class="itemChart">
+                    <h2>p3 (sensitivity)</h2>
+                    <canvas id="myChart3" width="280" height="125"></canvas>
+                </div>
+
+                <div class="itemC">
+                    <div class="container-grid3-2">
+                        <div class="itemC">
+                            <h2>CovY</h2>
+                            <div id="dotChart1" width="205" height="175"></div>
+                        </div>
+                        <div class="itemC">
+                            <h2>Weight</h2>
+                            <div id="dotChart2" width="205" height="175"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+<!--//////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <script src="./script_custom_OSigmaP_csvIO.js"></script>
+    <script src="./script_custom_OSigmaP_tables.js"></script>
+    <script src="./script_custom_OSigmaP_varAndSettings.js"></script>
+    <script src="./script_custom_OSigmaP.js"></script>
+</body>
+</html>
+
+
+
+<!-- https://handsontable.com/docs/javascript-data-grid/numeric-cell-type/ -->

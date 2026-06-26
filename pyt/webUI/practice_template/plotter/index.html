@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Movable Panel</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+</head>
+<body>
+  <button onclick="createNewSheet()">New Sheet</button>
+  <div class="popup" id="popup" style="display: none;">
+    <button onclick="plotT1HeatMap()" style="width:100%;">heatMap</button>
+    <button onclick="plotT1Scatter()" style="width:100%;">scatter</button>
+    <button onclick="window.open()" style="width:100%;">new</button>
+  </div>
+  <!-- <div id="plot0"></div> -->
+  <!-- <div id="plot1"></div> -->
+
+
+  <script src="./dataExtract.js"></script>
+  <script src="./varAndSettings.js"></script>
+  <script src="./panels.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="en"> -->
+<!-- <head> -->
+<!--   <meta charset="UTF-8"> -->
+<!--   <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+<!--   <title>Movable, Resizable, and Minimizable Panel</title> -->
+<!--   <link rel="stylesheet" href="styles.css"> -->
+<!-- </head> -->
+<!-- <body> -->
+
+<!-- <div id="panel" class="panel"> -->
+<!--   <\!-- <div class="panel-header" onmousedown="startDragging(event)"> -\-> -->
+<!--   <div class="panel-header" id="panelHeader"> -->
+<!--     <span class="panel-title">Movable Panel</span> -->
+<!--     <div class="panel-controls"> -->
+<!--       <button class="panel-minimize" onclick="toggleMinimize()">-</button> -->
+<!--       <button class="panel-close" onclick="closePanel()">×</button> -->
+<!--     </div> -->
+<!--   </div> -->
+<!--   <div class="panel-content"> -->
+<!--     <p>This is the content of the panel.</p> -->
+<!--   </div> -->
+<!-- </div> -->
+
+<!-- <script src="script.js"></script> -->
+<!-- </body> -->
+<!-- </html> -->

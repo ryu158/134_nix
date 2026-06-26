@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSV to Table and Scatter Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles_FFT.css">
+</head>
+
+
+
+
+
+
+<body>
+
+    <div class="container-nav">
+        <h3 style="color: #D5DBDB;"> Analysis tools </h3>
+        <a href="./index.html" target="_blank" class="button">home</a>
+        <a href="./digitMap/index.html" target="_blank" class="button">plotter</a>
+        <a href="https://apps.automeris.io/wpd/" target="_blank" class="button">Digitizer</a>
+        <a href="./index_interpolator.html" target="_blank" class="button" style="font-size: 16px">interpolate</a>
+        <a href="./index_FFT.html" target="_blank" class="button-1">FFT(t->f)</a>
+        <a href="./index_iFFT.html" target="_blank" class="button">iFFT(f->t)</a>
+        <a href="./index_FFTMulti.html" target="_blank" class="button">FFT(multi)</a>
+        <a href="./index_intpMulti.html" target="_blank" class="button">intp(multi)</a>
+        <a href="./index_custom.html" target="_blank" class="button">custom</a>
+    </div>
+
+
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+
+
+
+    <div class="container-csv" style="width: 14.0%;">
+        <h2>Load CSV File:</h2>
+        <input type="file" id="csvFile" accept=".csv">
+        <h2>Paste CSV Data Here:</h2>
+        <textarea id="csvData" placeholder="Paste CSV data here" rows="5" cols="27"></textarea>
+        <button onclick="parseCSV()">adopt to table</button>
+        <h2>export result to CSV:</h2>
+        <button onclick="exportToCSV()">export result to csv</button>
+        <h2>axis setting:</h2>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+        <div id="settingTable"></div>
+        <h1> </h1>
+        <button onclick="modifyRange()">adopt setting</button>
+
+    </div>
+
+
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+
+
+
+    <div class="container-FFTtable">
+        <h2>Table:</h2>
+        <button onclick="drawchart()">refresh graphs</button>
+        <button onclick="calculate()">calculate</button>
+        <input type="checkbox" id="check1" value="">
+        <label for="label1">truncate </label>
+        <input type="text" size="2" value="5" style="text-align: center;" id="trInput">
+        <label for="label2">%</label>
+        <h1> </h1>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+        <div id="handsonTable"></div>
+    </div>
+
+
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+
+
+
+    <div class="chart-container">
+        <h3>time domain</h3>
+        <canvas id="myChart" width="320" height="160"></canvas>
+        <h3>frequency domain</h3>
+        <form>
+            <label for="option-amp">
+                <input type="radio" id="option-amp" name="options" value="amp" onchange="drawchart()" checked>
+                amplitude
+            </label>
+            <label for="option-phase">
+                <input type="radio" id="option-phase" name="options" value="phase" onchange="drawchart()">
+                phase
+            </label>
+            <label for="option-real">
+                <input type="radio" id="option-real" name="options" value="real" onchange="drawchart()">
+                real
+            </label>
+            <label for="option-imag">
+                <input type="radio" id="option-imag" name="options" value="imag" onchange="drawchart()">
+                imag
+            </label>
+        </form>
+        <canvas id="myChart2" width="320" height="160"></canvas>
+    </div>
+
+
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+
+
+
+    <script src="./script_FFT.js"></script>
+    <script src="./script_common.js"></script>
+</body>
+</html>
+
+
+
+<!-- https://handsontable.com/docs/javascript-data-grid/numeric-cell-type/ -->

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sub Window</title>
+</head>
+<body>
+  <button onclick="sendMessageToParent()">Send Message to Parent</button>
+
+  <script>
+  let parentWindow = window.opener;
+
+  // Function to send a message to the parent window
+  function sendMessageToParent() {
+    if (parentWindow) {
+      parentWindow.postMessage('Hello from the sub-window!', '*'); // Send a message to the parent window
+    }
+  }
+
+  // Receive message from the parent window
+  window.addEventListener('message', function(event) {
+    console.log('Message received from parent window:', event.data);
+  });
+  </script>
+</body>
+</html>

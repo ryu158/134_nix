@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSV to Table and Scatter Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<!-- Navigator ///////////////////////////////////////////////////////////////////////////////////////////// -->
+    <div class="container-nav">
+        <h3 style="color: #D5DBDB;"> Analysis tools </h3>
+        <a href="./index.html" target="_blank" class="button">home</a>
+        <a href="https://apps.automeris.io/wpd/" target="_blank" class="button">Digitizer</a>
+        <a href="./index_interpolator.html" target="_blank" class="button" style="font-size: 16px">interpolate</a>
+        <a href="./index_FFT.html" target="_blank" class="button">FFT(t->f)</a>
+        <a href="./index_iFFT.html" target="_blank" class="button">iFFT(f->t)</a>
+        <a href="./index_FFTMulti.html" target="_blank" class="button-1">FFT(multi)</a>
+    </div>
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+<!-- CSV IO //////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <div class="container-csv" style="width: 13.4%;">
+        <h2>Load CSV File:</h2>
+        <input type="file" id="csvFile" accept=".csv">
+
+        <h2>Paste CSV Data Here:</h2>
+        <textarea id="csvData" placeholder="Paste CSV data here" rows="5" cols="27"></textarea>
+        <button onclick="parseCSV()">adopt to table</button>
+
+        <h2>axis setting:</h2>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+        <div id="settingTable"></div>
+        <h1> </h1>
+        <button onclick="modifyRange()">adopt setting</button>
+    </div>
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+<!-- Input ///////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <div class="container-table" style="width: 10.8%;">
+        <h2>Input:</h2>
+        <h1> </h1>
+        <button onclick="drawchart1()">refresh graphs</button>
+        <button onclick="exportToCSV(1)">export</button>
+        <h1> </h1>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+        <div id="table1"></div>
+    </div>
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+<!-- amp /////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <div class="container-table" style="width: 10.8%">
+        <h2>amplitude:</h2>
+        <h1> </h1>
+        <button onclick="calculate()">calculate</button>
+        <button onclick="exportToCSV(2)">export</button>
+        <h1> </h1>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+        <div id="table2"></div>
+    </div>
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+<!-- phase ///////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <div class="container-table" style="width: 10.8%">
+        <h2>phase:</h2>
+        <h1> </h1>
+        <button onclick="drawchart2()">refresh graphs</button>
+        <button onclick="exportToCSV(3)">export</button>
+        <h1> </h1>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+        <div id="table3"></div>
+    </div>
+
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+<!-- Chart ///////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <div class="chart-container" style="width: 40%;">
+        <h3>time domain</h3>
+        <canvas id="myChart" width="320" height="160"></canvas>
+
+        <h3>frequency domain</h3>
+        <form>
+            <label for="option-amp">
+                <input type="radio" id="option-amp" name="optionsChart" value="amp" onchange="drawchart1()" checked>
+                amplitude(real)
+            </label>
+            <label for="option-phase">
+                <input type="radio" id="option-phase" name="optionsChart" value="phase" onchange="drawchart1()">
+                phase(imag)
+            </label>
+        </form>
+        <canvas id="myChart2" width="320" height="160"></canvas>
+    </div>
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+<!--//////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <script src="./script_FFTMulti.js"></script>
+    <script src="./script_FFTMulti_tables.js"></script>
+    <script src="./script_FFTMulti_csvIO.js"></script>
+    <script src="./script_common.js"></script>
+</body>
+</html>
+
+
+
+<!-- https://handsontable.com/docs/javascript-data-grid/numeric-cell-type/ -->

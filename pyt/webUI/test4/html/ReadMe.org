@@ -1,0 +1,8 @@
+#+title: Read Me
+
+how to split(or include) html into html
+https://kyung-a.tistory.com/18
+../index_custom_FFTAnalysis.html line 16~18
+
+how to disable using webcacheing, and html update directly from server
+browser -> mouse right click & inspect or F12 -> network -> Disable cache

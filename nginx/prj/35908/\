@@ -1,0 +1,358 @@
+
+class DynUI {
+    constructor(containerID) {
+        this.container = document.getElementById(containerID);
+        this.buttonList = {};
+        this.inputList = {};
+        this.fileInputList = {};
+        this.selectList = {};
+        this.tableList = {};
+        this.canvasList = {};
+        this.chartList = {};
+        this.tableSettings = {};
+        this.tableDataList = {};
+
+        this.tableSettingsAtStart = {
+            data: [
+                [ , ],
+            ],
+            allowEmpty: true,
+            type: 'numeric',
+            numericFormat: {
+                pattern: '0,0.00',
+            },
+            colHeaders: true,
+            rowHeaders: true,
+            customBorders: true,
+            width: '100%',
+            height: '63.5%',
+            renderAllRows: false,
+            licenseKey: 'non-commercial-and-evaluation'
+        }
+        this.chartSettingsScatPoint = {
+            label: 'Calculated',
+            backgroundColor: "rgba(150, 100, 100, 0.6)",
+            pointRadius: 0,
+            pointHoverRadius: 0,
+            showLine: true,
+            fill: false,
+            borderWidth: 3,
+            borderColor: "rgba(150, 100, 100, 0.6)",
+            //borderDash: [10, 3, 20, 10],
+            tension:0.5
+        };
+
+    }
+
+    handleClick() {
+        alert('button clicked!');
+    }
+
+    addTitle(titleText, font) {
+        const title = document.createElement(font);
+        title.textContent = titleText;
+        this.container.appendChild(title);
+    }
+
+    addLabel(labelText) {
+        const label = document.createElement('label');
+        label.textContent = labelText;
+        this.container.appendChild(label);
+    }
+
+    addLines(lineNum) {
+        for (let i = 0; i <= lineNum; i++) {
+            const line = document.createElement('br');
+            this.container.appendChild(line);
+        }
+    }
+
+    addButton(buttonID, buttonText) {
+        const button = document.createElement('button');
+        button.id = buttonID;
+        button.textContent = buttonText;
+        button.style = {
+            width: '200px',
+            height: '50px'
+        };
+        this.container.appendChild(button);
+        this.buttonList[buttonID] = button;
+    }
+
+    addSelect(selectID) {
+        const select = document.createElement('select');
+        select.id = selectID;
+        const option = document.createElement('option');
+        option.value = 'no data';
+        option.text = 'no data';
+        select.appendChild(option);
+        this.container.appendChild(select);
+        this.selectList[selectID] = select;
+    }
+
+    modifySelect(selectID, options) {
+        const select = document.getElementById(selectID);
+        select.innerHTML ="";
+        for (var option of options) {
+            select.appendChild(option);
+        }
+    }
+
+    addInput(inputID, width, defaultValue) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = inputID;
+        input.style.width = width;
+        input.style.textAlign = 'center';
+        input.value = defaultValue;
+        this.container.appendChild(input);
+        this.inputList[inputID] = input;
+    }
+
+    addFileInput(inputID) {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.id = inputID;
+        input.accept = '.csv';
+        input.multiple = true;
+        this.container.appendChild(input);
+        this.fileInputList[inputID] = input;
+    }
+
+    addTable(tableID) {
+        const table = document.createElement('div');
+        table.id = tableID;
+        this.container.appendChild(table);
+        this.tableSettings[tableID] = Object.assign({}, this.tableSettingsAtStart);
+        this.tableList[tableID]= new Handsontable(table, this.tableSettings[tableID]);
+    }
+
+    modifyTable(tableID, tableSettings) {
+        const table = document.getElementById(tableID);
+        this.tableList[tableID]= new Handsontable(table, tableSettings);
+    }
+
+    addChart(chartID, width, height){
+        console.log('test');
+        const canvas = document.createElement('canvas');
+        canvas.id = chartID;
+        canvas.width = width;
+        canvas.height = height;
+
+        this.container.appendChild(canvas);
+
+        const chart = new Chart(canvas.getContext('2d'), {
+            type: 'scatter',
+            data: {
+                datasets: [],
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom'
+                    },
+                    y: {
+
+                    }
+                }
+            }
+        });
+
+        this.canvasList[chartID] = canvas;
+        this.chartList[chartID] = chart;
+    }
+}
+
+
+var options1 = [];
+
+const dynUI1 = new DynUI('dynUI1');
+dynUI1.addTitle('Input', 'h1');
+dynUI1.addLabel('Num of Header: ');
+dynUI1.addInput('input1', '40px', '37');
+dynUI1.addLabel(' , ');
+dynUI1.addLines(1);
+dynUI1.addLabel('column range to remove: ');
+dynUI1.addInput('input2', '35px', '3');
+dynUI1.addLabel(' ~ ');
+dynUI1.addInput('input3', '35px', '7');
+dynUI1.addLines(1);
+dynUI1.addFileInput('fileInput1');
+dynUI1.addLines(1);
+dynUI1.addLabel(' select csv file to show: ');
+dynUI1.addSelect('select1');
+dynUI1.addLabel(' , ');
+dynUI1.addLines(1);
+dynUI1.addTable('table1');
+
+const dynUI2 = new DynUI('dynUI2');
+dynUI2.addTitle('Output', 'h1');
+dynUI2.addLabel('truncate under: ');
+dynUI2.addInput('input2_tr', '35px', '0');
+dynUI2.addLabel('%');
+dynUI2.addLines(1);
+dynUI2.addLabel('truncate over: ');
+dynUI2.addInput('input2_tr2', '35px', '100');
+dynUI2.addLabel('%');
+dynUI2.addLines(1);
+dynUI2.addButton('button2_1', 'calculate');
+dynUI2.addLines(1);
+dynUI2.addLines(1);
+dynUI2.addTable('table2_1');
+
+const dynUI3 = new DynUI('dynUI3');
+dynUI3.addTitle('Charts','h1');
+dynUI3.addTitle('Input data','h2');
+dynUI3.addChart('chart3_1', 280, 200);
+dynUI3.addLines(1);
+dynUI3.addTitle('Output data','h2');
+dynUI3.addChart('chart3_2', 280, 200);
+
+
+dynUI1.fileInputList['fileInput1'].addEventListener('change', async function(event) {
+    var headerNum = +document.getElementById('input1').value;
+    var colRanMin = +document.getElementById('input2').value;
+    var colRanMax = +document.getElementById('input3').value;
+    var fileNum = dynUI1.fileInputList.fileInput1.files.length;
+
+    options1 = [];
+    for (i = 0; i < fileNum; i++) {
+        const option = document.createElement('option');
+        option.value = (i+1).toString();
+        option.text = (i+1).toString();
+        options1[i] = option;
+    }
+
+    loadCSVsFromFolder(dynUI1, 'fileInput1', 'table1', headerNum, colRanMin, colRanMax);
+    dynUI1.modifySelect('select1', options1);
+    dynUI1.selectList['select1'].value = fileNum.toString();
+    dynUI1.selectList['select1'].text = fileNum.toString();
+});
+
+
+dynUI1.selectList['select1'].addEventListener('change', function(event) {
+    const container = dynUI1;
+    const selNum = +container.selectList['select1'].value;
+    var dataTable1 = dynUI1.tableDataList[selNum-1];
+    var dataTable2 = dynUI2.tableDataList[selNum-1];
+
+    dynUI1.tableSettings['table1'].data = dataTable1;
+    dynUI1.modifyTable('table1', dynUI1.tableSettings['table1']);
+    dynUI2.tableSettings['table2_1'].data = dynUI2.tableDataList[selNum-1].amp_result;
+    dynUI2.modifyTable('table2_1', dynUI2.tableSettings['table2_1']);
+
+    var waveLength = dataTable1.map(row => row[0]);
+    var alpha = dataTable1.map(row => row[1]);
+    var beta = dataTable1.map(row => row[2]);
+    var frequency = dataTable2.map(row => row[0]);
+    var amp = dataTable2.map(row => row[1]);
+    var pow = dataTable2.map(row => row[1]**row[1]);
+
+    drawChart(waveLength, alpha, dynUI.chartList['chart3_1'], dynUI3);
+    drawChart(frequency, pow, dynUI.chartList['chart3_1'], dynUI3);
+})
+
+
+dynUI2.buttonList['button2_1'].addEventListener('click',async function(event) {
+
+    var fileNum = dynUI1.fileInputList.fileInput1.files.length;
+
+    for (i = 0; i < fileNum; i++) {
+        var dataTemp = dynUI1.tableDataList[i];
+        const trRatio = document.getElementById('input2_tr').value;
+
+        const response = await fetch('http://192.168.12.135:6969/FFTMulti', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                check: true,
+                data: dataTemp,
+                truncateRatio: trRatio
+            })
+        });
+
+        data = await response.json();
+
+        dynUI2.tableDataList[i] = Object.assign({}, data);
+    }
+
+    const selNum = +dynUI1.selectList['select1'].value;
+    dynUI2.tableSettings['table2_1'].data = dynUI2.tableDataList[selNum-1].amp_result;
+    dynUI2.modifyTable('table2_1', dynUI2.tableSettings['table2_1']);
+})
+
+
+
+
+
+
+
+
+
+function loadCSVsFromFolder(container, inputName, tableName, headerNum, colRanMin, colRanMax) {
+    var files = container.fileInputList[inputName].files;
+    let i = 0;
+
+    for (const file of files) {
+        if (file.type === 'text/csv') {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                var csvDataOrigin = e.target.result;
+                container.tableDataList[i] = formattingData(csvDataOrigin, headerNum, colRanMin, colRanMax);
+                container.tableSettings[tableName].data = container.tableDataList[i];
+                container.modifyTable(tableName, container.tableSettings[tableName]);
+                i++;
+            };
+            reader.readAsText(file);
+        } else {
+            console.log(`${file.name} is not a CSV file.`);
+        }
+    }
+}
+
+function formattingData(csvData, headerNum, colNumRangeMin, colNumRangeMax) {
+    var rows = csvData.split("\n");
+    var trimedRows = rows.slice(headerNum);
+    var csvDataAOA = trimedRows.map(row => {
+        let columns = row.split(/[\t,]/);
+        let updatedColumns = columns.slice(0, colNumRangeMin).concat(columns.slice(colNumRangeMax));
+        return updatedColumns;
+    });
+    return csvDataAOA;
+}
+
+function drawChart(xData, yData, chart, chartContainer) {
+
+    chartSettingsScatPoint = [Object.assign({}, chartContainer.chartSettingsScatPoint)];
+    chartSettingsScatPoint[0].data = xData.map((value, index) => ({ x: value, y: yData[index] }));
+
+    chart.data.datasets = [
+        chartSettingsScatPoint[0],
+    ];
+
+    // if (!checkKeepAxis.checked) {
+    //     scatterChart1.options.scales = {
+    //         x: {
+    //             min: xData1.min,
+    //             max: xData1.max
+    //         },
+    //         y: {
+    //             ticks: {
+    //                 callback: function(value, index, values) {
+    //                     return value.toExponential(1); // Convert ticks to scientific notation
+    //                 },
+    //             },
+    //         },
+    //     };
+    // } else {
+    // }
+    chart.update();
+}

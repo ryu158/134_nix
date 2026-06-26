@@ -1,0 +1,16 @@
+#+title: Read Me
+
+./html/index.html -> nginx reverse proxy at port 7979, localhost:7979 or 192.168.12.135:7979
+
+https://tms-dev-blog.com/python-backend-with-javascript-frontend-how-to/
+https://chat.openai.com/c/0edc825c-4e23-47b4-b6ad-28deac724297
+
+
+using grid
+https://studiomeal.com/archives/533
+https://www.codingfactory.net/10599
+
+
+themes & templates
+wordpress: https://wordpress.com/ko/
+bootstrap: https://themes.getbootstrap.com/

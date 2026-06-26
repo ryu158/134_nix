@@ -1,0 +1,204 @@
+    <style>
+
+        .button {
+            display: inline-block;
+            padding: 5px 5px;
+            background-color: #5D6D7E ;
+            color: #D6DBDF;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            width: 100px;
+        }
+        .button-1 {
+            display: inline-block;
+            padding: 5px 5px;
+            background-color: #5D6D7E ;
+            color: #E6B0AA;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            width: 100px;
+        }
+
+        .container-nav {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            background-color: #85929E;
+            width: 5.8%;
+            text-align: center;
+            padding: 5px;
+            float: left;
+            overflow: hidden; /* Clear the float */
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+        .container-csv {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            width: 12.5%;
+            padding: 10px;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .container-empty {
+            width: 2%;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .container-table {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            width: 9.0%;
+            padding: 10px;
+            text-align: center;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .container-empty {
+            width: 0.5%;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .chart-container {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            width: 42%;
+            padding: 1px;
+            text-align: center;
+            float: left;
+        }
+        .container-setting {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            width: 13.6%;
+            padding: 10px;
+            text-align: center;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+
+    </style>
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    <div class="container-nav">
+        <h3 style="color: #D5DBDB;"> Analysis tools </h3>
+        <a href="./index.html" target="_blank" class="button">home</a>
+        <a href="https://apps.automeris.io/wpd/" target="_blank" class="button">Digitizer</a>
+        <a href="./index_interpolator.html" target="_blank" class="button" style="font-size: 16px">interpolate</a>
+        <a href="./index_FFT.html" target="_blank" class="button-1">FFT(t->f)</a>
+        <a href="./index_iFFT.html" target="_blank" class="button">iFFT(f->t)</a>
+    </div>
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    if not check:
+        col2 = np.fft.ifft(s_fft).real
+        col4 = amplitude.astype(str)
+        col5 = phase.astype(str)
+
+    else:
+        fft_lx = s_fft.copy()
+        phase_lx = phase.copy()
+        amplitude_lx = amplitude.copy()
+        tr_ratio = float(truncate_ratio)/100
+        amplitude_lx[amplitude/amplitude.max() < tr_ratio] = 0
+        fft_lx[amplitude/amplitude.max() < tr_ratio] = 0
+        phase_lx[amplitude/amplitude.max() < tr_ratio] = 0
+
+        col2 = np.fft.ifft(fft_lx).real
+        col4 = amplitude_lx.astype(str)
+        col5 = phase_lx.astype(str)
+
+        const table1Settings = {
+            data: parsedData,
+            type: 'numeric',
+            numericFormat: {
+                pattern: '0,0.00',
+            },
+            allowEmpty: true,
+            colHeaders: true,
+            rowHeaders: true,
+            customBorders: true,
+            dropdownMenu: false,
+            width: 'auto',
+            height: 'auto',
+            licenseKey: 'non-commercial-and-evaluation'
+        };
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        <form>
+            <label for="option-loadInput">
+                <input type="radio" id="option-loadInput" name="optionsLoad" value="loadInput" onchange="loadCSVFromFile()" checked>
+                Input
+            </label>
+            <label for="option-loadREF">
+                <input type="radio" id="option-loadREF" name="optionsLoad" value="loadREF" onchange="loadCSVFromFile()">
+                REF
+            </label>
+        </form>
+
+
+    const optionsChart = document.getElementsByName('optionsChart');
+
+        optionsChart.forEach(option => {
+            if (option.checked) {
+                selectedOption = option.value;
+            }
+        });
+
+        if (selectedOption == "amp") {
+            yData00 = table1Content.getDataAtCol(1);
+        } else {
+            yData00 = table1Content.getDataAtCol(2);
+        }
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        if (table1Content) { table1Content.destroy(); }
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        optionsAmpPhs.forEach(option => {
+            if (option.checked) {
+                selectedOption = option.value;
+            }
+        });
+
+        if (selectedOption == "amp") {
+            table3Settings.data = amp_result;
+        } else {
+            table3Settings.data = phs_result;
+        }
+
+
+
+        var xData1 = table2Content.getDataAtCol(0);
+        var yData10 = table2Content.getDataAtCol(1);
+        var yData20 = table2Content.getDataAtCol(2);
+        var yData30 = table2Content.getDataAtCol(3);
+
+
+    if (keyStr == 4) {
+        var Data0 = tableContent.tableName.getData();
+    } else if (keyStr == 3) {
+        var Data0 = tableContent.tableName.getData();
+    } else if (keyStr == 2) {
+        var Data0 = tableContent.tableName.getData();
+    } else {
+        var Data0 = tableContent.tableName.getData();
+    }

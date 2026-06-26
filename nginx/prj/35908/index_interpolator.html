@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSV to Table and Scatter Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+
+<body>
+	<div class="main-layout-wrapper">
+	    <div class="container-nav">
+		<h3 style="color: #D5DBDB;"> Analysis tools </h3>
+		<a href="./index.html" target="_blank" class="button">home</a>
+		<a href="./digitMap/index.html" target="_blank" class="button">plotter</a>
+		<a href="https://apps.automeris.io/wpd/" target="_blank" class="button">Digitizer</a>
+		<a href="./index_interpolator.html" target="_blank" class="button-1" style="font-size: 16px">interpolate</a>
+		<a href="./index_FFT.html" target="_blank" class="button">FFT(t->f)</a>
+		<a href="./index_iFFT.html" target="_blank" class="button">iFFT(f->t)</a>
+		<a href="./index_FFTMulti.html" target="_blank" class="button">FFT(multi)</a>
+		<a href="./index_intpMulti.html" target="_blank" class="button">intp(multi)</a>
+		<a href="./index_custom.html" target="_blank" class="button">custom</a>
+	    </div>
+
+	    <div class="container-empty">
+		<h2> </h2>
+	    </div>
+
+	    <div class="container-csv">
+
+		<h2>Load CSV File:</h2>
+		<input type="file" id="csvFile" accept=".csv">
+		<!-- <button onclick="loadCSVFromFile()">Load CSV from File</button> -->
+
+		<h2>Paste CSV Data Here:</h2>
+		<textarea id="csvData" placeholder="Paste CSV data here" rows="5" cols="27"></textarea>
+
+		<button onclick="parseCSV()">adopt to table</button>
+
+		<h2>export result to CSV:</h2>
+		<button onclick="exportToCSV()">export result to csv</button>
+
+	    </div>
+
+	    <div class="container-empty">
+		<h2> </h2>
+	    </div>
+
+	    <div class="container-table">
+		<h2>Input:</h2>
+
+		<label for="label1" style="color: white;">__________________________</label>
+		<label for="label1" style="color: white;">_</label>
+		<h1> </h1>
+		<button onclick="drawchart()">refresh graphs</button>
+		<h1> </h1>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+		<div id="table1"></div>
+	    </div>
+
+	    <div class="container-empty">
+		<h2> </h2>
+	    </div>
+
+	    <div class="container-table">
+		<h2>result:</h2>
+
+		<label for="label1">min ~ max, interval </label>
+		<input type="text" size="2" value="0" style="text-align: center;" id="rangeMin">
+		<input type="text" size="2" value="100" style="text-align: center;" id="rangeMax">
+		<input type="text" size="2" value="1" style="text-align: center;" id="interval">
+		<h1> </h1>
+		<button onclick="calculate()">calculate</button>
+		<h1> </h1>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+		<div id="table2"></div>
+	    </div>
+
+	    <div class="container-empty">
+		<h2> </h2>
+	    </div>
+
+	    <div class="chart-container">
+		<h3>Input-Interpolated</h3>
+		<canvas id="myChart" width="320" height="160"></canvas>
+	    </div>
+
+	    <div class="container-empty">
+		<h2> </h2>
+	    </div>
+
+	    <div class="container-setting">
+		<h2>axis setting:</h2>
+
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+		<div id="settingTable"></div>
+
+		<h1> </h1>
+		<button onclick="modifyRange()">adopt setting</button>
+	    </div>
+
+	    <script src="./script_interpolator.js"></script>
+	    <script src="./script_interpolator_tables.js"></script>
+	</div>
+
+</body>
+</html>
+
+
+
+<!-- https://handsontable.com/docs/javascript-data-grid/numeric-cell-type/ -->

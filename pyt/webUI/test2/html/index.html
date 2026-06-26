@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSV to Table and Scatter Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
+    <style>
+        .container-csv {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            width: 18%;
+            padding: 10px;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .container-empty {
+            width: 2%;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .container-table {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            width: 15%;
+            padding: 10px;
+            text-align: center;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .chart-container {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            width: 57%;
+            padding: 1px;
+            text-align: center;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-csv">
+
+        <h2>Load CSV File:</h2>
+        <input type="file" id="csvFile" accept=".csv">
+        <!-- <button onclick="loadCSVFromFile()">Load CSV from File</button> -->
+
+        <h2>Paste CSV Data Here:</h2>
+        <textarea id="csvData" placeholder="Paste CSV data here" rows="5" cols="32"></textarea>
+
+        <button onclick="parseCSV()">refresh data</button>
+
+        <button onclick="calculate()">send column data</button>
+
+    </div>
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+
+    <div class="container-table">
+        <h2>Table:</h2>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+        <div id="handsonTable"></div>
+    </div>
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+
+    <div class="chart-container">
+        <h2>Scatter Chart:</h2>
+        <canvas id="myChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        // Initialize the scatter chart
+        var fileInput = document.getElementById('csvFile');
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var scatterChart = new Chart(ctx, {
+            type: 'scatter', // Set the chart type to scatter
+            data: {
+                datasets: [],
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom'
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        var hot;
+
+        fileInput.addEventListener('change', function(event) {
+            const selectedFile = event.target.files[0];
+            loadCSVFromFile();
+        });
+
+        function parseCSV() {
+            var csvData = document.getElementById("csvData").value;
+            var csvDataAOA = convertToAOA(csvData);
+            createHandsonTable(csvDataAOA);
+            drawchart();
+        }
+
+
+        function loadCSVFromFile() {
+            var fileInput = document.getElementById("csvFile");
+            var file = fileInput.files[0];
+
+            if (file) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var csvData = e.target.result;
+                    var csvDataAOA = convertToAOA(csvData);
+
+                    createHandsonTable(csvDataAOA);
+                    drawchart();
+                };
+
+                reader.readAsText(file);
+            }
+        }
+
+        function convertToAOA(csvData) {
+            var rows = csvData.split("\n");
+            var csvDataAOA = rows.map(row => row.split(/[\t,]/));
+            return csvDataAOA;
+        }
+
+        async function calculate() {
+            var col0 = hot.getDataAtCol(0)
+            var col1 = hot.getDataAtCol(1)
+            var data0 = hot.getData()
+
+            const response = await fetch('http://192.168.12.135:6969/add2', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data0)
+            });
+
+            const data = await response.json();
+            console.log(data[2]);
+
+            createHandsonTable(data);
+            drawchart();
+        }
+
+        function createHandsonTable(csvData) {
+            const parsedData = csvData;
+
+            console.log("parsedData = " + typeof parsedData);
+
+            const hotElement = document.getElementById('handsonTable');
+            const hotSettings = {
+                data: parsedData,
+                // type: 'numeric',
+                // numericFormat: {
+                //     pattern: '0,0',
+                // },
+                //colHeaders: ['Aa', 'Bb', 'Cc' ],
+                //columnSorting: true,
+                columns: [
+                    {
+                    },
+                    {
+                        type: 'numeric',
+                        numericFormat: {
+                            pattern: '0,0.000',
+                        }
+                    },
+                    {
+                        type: 'numeric',
+                        numericFormat: {
+                            pattern: '0,0.000',
+                        }
+                    }
+
+                ],
+                colHeaders: true,
+                rowHeaders: true,
+                height: 'auto',
+                licenseKey: 'non-commercial-and-evaluation'
+            };
+
+            hot = new Handsontable(hotElement, hotSettings);
+        }
+
+        function drawchart() {
+            var xData = hot.getDataAtCol(0);
+            var yData1 = hot.getDataAtCol(1);
+            var yData2 = hot.getDataAtCol(2);
+            <!-- var rowsInTable = table.getElementsByTagName("tr"); -->
+
+            <!-- for (var i = 1; i < rowsInTable.length; i++) { -->
+            <!--     var cells = rowsInTable[i].getElementsByTagName("td"); -->
+            <!--     console.log("row: " + rows[i]); -->
+            <!--     console.log("cells: " + cells[1].textContent); -->
+            <!--     xData.push(parseFloat(cells[0].textContent)); -->
+            <!--     yData1.push(parseFloat(cells[1].textContent)); -->
+            <!--     yData2.push(parseFloat(cells[2].textContent)); -->
+            <!-- } -->
+
+            scatterChart.data.datasets = [
+                {
+                    label: 'data 1',
+                    data: xData.map((value, index) => ({ x: value, y: yData1[index] })),
+                    backgroundColor: "rgba(75, 192, 192, 0.6)",
+                    pointRadius: 2,
+                    pointHoverRadius: 2,
+                    pointStyle: 'rectRot',
+                    showLine: true,
+                    fill: false,
+                    borderWidth: 5,
+                    borderColor: "rgba(75, 192, 192, 0.6)",
+                    borderDash: [10, 10],
+                    tension: 0.5,
+                },
+                {
+                    label: 'data 2',
+                    data: xData.map((value, index) => ({ x: value, y: yData2[index] })),
+                    backgroundColor: "rgba(150, 100, 100, 0.6)",
+                    pointRadius: 2,
+                    pointHoverRadius: 2,
+                    showLine: true,
+                    fill: false,
+                    borderWidth: 3,
+                    borderColor: "rgba(150, 100, 100, 0.6)",
+                    borderDash: [10, 3, 20, 10],
+                }
+            ];
+
+            // Update scatter chart
+            scatterChart.update();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function createTable(csvData) {
+
+            var table = document.getElementById("dataTable");
+
+            // Split CSV data into rows
+            var rows = csvData.split("\n");
+            console.log("rows: " + rows);
+
+            // Clear existing table content
+            table.innerHTML = "";
+
+
+            var digit_set = [ 0, 3, 3 ];
+
+            // Create a table row for each CSV row
+            for (var i = 0; i < rows.length; i++) {
+                var row = document.createElement("tr");
+                var columns = rows[i].split(/[\t,]/);
+
+                // Create table cells for each CSV column
+                for (var j = 0; j < columns.length; j++) {
+                    var cell = document.createElement(i === 0 ? "th" : "td"); // Use th for the first row as headers
+                    var fixedVal = parseFloat(columns[j]).toFixed(digit_set[j]);
+                    if (!isNaN(fixedVal)) {
+                        cell.textContent = fixedVal;
+                        //console.log("fixedVal: " + typeof fixedVal);
+                    } else {
+                        cell.textContent = columns[j];
+                    }
+                    row.appendChild(cell);
+                }
+
+                table.appendChild(row);
+            }
+
+            // Create scatter chart datasets using the data from the table
+            var xData = [];
+            var yData1 = [];
+            var yData2 = [];
+            var rowsInTable = table.getElementsByTagName("tr");
+
+            for (var i = 1; i < rowsInTable.length; i++) {
+                var cells = rowsInTable[i].getElementsByTagName("td");
+                console.log("row: " + rows[i]);
+                console.log("cells: " + cells[1].textContent);
+                xData.push(parseFloat(cells[0].textContent));
+                yData1.push(parseFloat(cells[1].textContent));
+                yData2.push(parseFloat(cells[2].textContent));
+            }
+
+            // Update scatter chart data
+            scatterChart.data.datasets = [
+                {
+                    label: 'data 1',
+                    data: xData.map((value, index) => ({ x: value, y: yData1[index] })),
+                    backgroundColor: "rgba(75, 192, 192, 0.6)",
+                    pointRadius: 2,
+                    pointHoverRadius: 2,
+                    pointStyle: 'rectRot',
+                    showLine: true,
+                    fill: false,
+                    borderWidth: 5,
+                    borderColor: "rgba(75, 192, 192, 0.6)",
+                    borderDash: [10, 10],
+                    tension: 0.5,
+                },
+                {
+                    label: 'data 2',
+                    data: xData.map((value, index) => ({ x: value, y: yData2[index] })),
+                    backgroundColor: "rgba(150, 100, 100, 0.6)",
+                    pointRadius: 2,
+                    pointHoverRadius: 2,
+                    showLine: true,
+                    fill: false,
+                    borderWidth: 3,
+                    borderColor: "rgba(150, 100, 100, 0.6)",
+                    borderDash: [10, 3, 20, 10],
+                }
+            ];
+
+            // Update scatter chart
+            scatterChart.update();
+        }
+    </script>
+</body>
+</html>
+
+
+
+<!-- https://handsontable.com/docs/javascript-data-grid/numeric-cell-type/ -->

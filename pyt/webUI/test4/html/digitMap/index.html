@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Title here</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
+    <link rel="stylesheet" href="./styles.css">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+    <div class="container-grid0">
+        <div class="item">
+            <div class="container-grid2">
+                <div class="item">
+                    <h1>Table1</h1>
+                    <div id="table1"></div>
+                    <div class="popup" id="popup" style="display: none;">
+                        <button onclick="plotT1HeatMap()" style="width:100%;">heatMap</button>
+                        <button onclick="plotT1Scatter()" style="width:100%;">scatter</button>
+                        <button onclick="window.open()" style="width:100%;">new</button>
+                    </div>
+
+                    <button onclick="plotsChoose()">plot</button>
+                    <label for="optT1">
+                        <input type="radio" id="optT1" name="optT" value="table1" onchange="">
+                        table1
+                    </label>
+                    <label for="optT2">
+                        <input type="radio" id="optT2" name="optT" value="table2" onchange="" checked>
+                        table2
+                    </label>
+                    <br> <br>
+
+                    <button onclick="selectedDataTo('table1', 'table2')">ExtractData(t1->t2)</button> <br> <br>
+                </div>
+
+                <div class="item">
+                    <h1>Table2</h1>
+                    <div id="table2"></div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="itemC">
+            <h1>heatMap</h1>
+            <div id="plot1"></div>
+        </div>
+    </div>
+
+    <script src="./closedFunctions.js"></script>
+    <script src="./varAndSettings.js"></script>
+    <script src="./defaultSetting.js"></script>
+    <script src="./eventListeners.js"></script>
+    <script src=""></script>
+</body>
+</html>
+
+
+
+<!-- https://handsontable.com/docs/javascript-data-grid/numeric-cell-type/ -->

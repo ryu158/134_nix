@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSV to Table and Scatter Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
+    <style>
+        .button {
+            display: inline-block;
+            padding: 5px 20px;
+            background-color: #5D6D7E ;
+            color: #D6DBDF;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .button-1 {
+            display: inline-block;
+            padding: 5px 20px;
+            background-color: #5D6D7E ;
+            color: #E6B0AA;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+
+        .container-nav {
+            border: 1px dotted grey;
+              border-end-end-radius: 15px 15px;
+              border-start-end-radius: 15px 15px;
+              border-end-start-radius: 15px 15px;
+              border-start-start-radius: 15px 15px;
+            background-color: #85929E;
+            width: 5.8%;
+            text-align: center;
+            padding: 5px;
+            float: left;
+            overflow: hidden; /* Clear the float */
+
+        }
+        .container-csv {
+            /* border: 1px dotted grey; */
+            /*   border-end-end-radius: 15px 15px; */
+            /*   border-start-end-radius: 15px 15px; */
+            /*   border-end-start-radius: 15px 15px; */
+            /*   border-start-start-radius: 15px 15px; */
+            width: 12.5%;
+            padding: 10px;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .container-empty {
+            width: 2%;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .container-table {
+            /* border: 1px dotted grey; */
+            /*   border-end-end-radius: 15px 15px; */
+            /*   border-start-end-radius: 15px 15px; */
+            /*   border-end-start-radius: 15px 15px; */
+            /*   border-start-start-radius: 15px 15px; */
+            width: 19.0%;
+            padding: 10px;
+            text-align: center;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .container-empty {
+            width: 1%;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+        .chart-container {
+            /* border: 1px dotted grey; */
+            /*   border-end-end-radius: 15px 15px; */
+            /*   border-start-end-radius: 15px 15px; */
+            /*   border-end-start-radius: 15px 15px; */
+            /*   border-start-start-radius: 15px 15px; */
+            width: 45%;
+            padding: 1px;
+            text-align: center;
+            float: left;
+        }
+        .container-setting {
+            /* border: 1px dotted grey; */
+            /*   border-end-end-radius: 15px 15px; */
+            /*   border-start-end-radius: 15px 15px; */
+            /*   border-end-start-radius: 15px 15px; */
+            /*   border-start-start-radius: 15px 15px; */
+            width: 14%;
+            padding: 10px;
+            text-align: center;
+            float: left;
+            overflow: hidden; /* Clear the float */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container-nav">
+        <h3 style="color: #D5DBDB;"> Analysis tools </h3>
+        <a href="./index.html" class="button-1">home</a>
+        <h6></h6>
+        <a href="./index_FFT.html" class="button">FFT(t->f)</a>
+    </div>
+
+    <div class="container-csv">
+    </div>
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+
+    <div class="container-table">
+
+    </div>
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+
+    <div class="chart-container">
+    </div>
+
+    <div class="container-empty">
+        <h2> </h2>
+    </div>
+
+    <div class="container-setting">
+    </div>
+
+
+    <script>
+     </script>
+</body>
+</html>
+
+
+
+<!-- https://handsontable.com/docs/javascript-data-grid/numeric-cell-type/ -->

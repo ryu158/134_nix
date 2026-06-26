@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Title here</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <button id="show">팝업열기</button>
+    <div class="background">
+      <div class="window">
+        <div class="popup">
+          <button id="close">팝업닫기</button>
+        </div>
+        <div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <button onclick="openModal()">Open Modal</button> -->
+    <button id="myButton">Right-click or Left-click me</button>
+    <div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p>This is a modal window.</p>
+    </div>
+    </div>
+
+    <div id="customContextMenu">Right-click me</div>
+    <div id="popup" style="display: none; position: absolute; border: 1px solid black; background-color: white; padding: 10px;">
+    Popup Content
+    </div>
+
+    <button onclick="openSubWindow()">Open Sub-Window</button>
+
+    <button onclick="openModal2()">Open Modal</button>
+
+    <!-- Modal -->
+    <div id="myModal2" class="modal2">
+    <div class="modal2-content">
+        <span class="close2" onclick="closeModal2()">&times;</span>
+        <span class="minimize" onclick="minimizeModal2()">-</span>
+        <p>This is a modal dialog.</p>
+        <button onclick="">button1</button>
+    </div>
+    </div>
+
+
+    <script src="./script.js"></script>
+    <script src=""></script>
+</body>
+</html>
+
+
+
+<!-- https://handsontable.com/docs/javascript-data-grid/numeric-cell-type/ -->
