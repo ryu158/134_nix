@@ -56,4 +56,4 @@
         get_SSL              = pkgs.writeShellScriptBin "get-ssl"              "${masterScript} get-ssl \"$@\"";
       };
     };
-}rnalctl -u nginx.service -n 50 --no-pager
+}
