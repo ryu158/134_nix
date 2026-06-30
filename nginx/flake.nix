@@ -12,7 +12,7 @@
 
       # --- Load Private Config from outside the Git repo ---
       # This pulls the data directly from your home folder, safely bypassing Git.
-      config = import /home/opc/nginx-secrets.nix // {
+      config = import ./nginx-secrets.nix // {
         nginxPkg = "${pkgs.nginx}"; # Keeps the package derivation tied to nixpkgs
       };
 
