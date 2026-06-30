@@ -51,6 +51,7 @@ case "$COMMAND" in
     sudo cp @nginxConf@ /etc/nginx/nginx.conf
     sudo firewall-cmd --reload
     sudo systemctl restart nginx.service
+    systemctl status nginx.service
     ;;
 
   update-service)

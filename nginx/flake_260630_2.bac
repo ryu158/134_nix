@@ -12,7 +12,7 @@
 
       # Configuration Variables Grouped Cleanly
       config = {
-        domain = "my_domain.duckdns.org";
+        domain = "ryuora134.duckdns.org";
         web_root = "/etc/nginx/prj/35908";
         openPortsStr = "443 80";
         nginxPkg = "${pkgs.nginx}";
