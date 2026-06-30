@@ -10,13 +10,15 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
 
-      # --- Load Private Config from outside the Git repo ---
-      # This pulls the data directly from your home folder, safely bypassing Git.
-      config = import /home/opc/nginx-secrets.nix // {
-        nginxPkg = "${pkgs.nginx}"; # Keeps the package derivation tied to nixpkgs
+      # Configuration Variables Grouped Cleanly
+      config = {
+        domain = "my_domain.duckdns.org";
+        web_root = "/etc/nginx/prj/35908";
+        openPortsStr = "443 80";
+        nginxPkg = "${pkgs.nginx}";
       };
 
-      # 1. Template out configurations using substituteAll
+      # 1. Template out configurations cleanly using substituteAll
       nginxConfDrv = pkgs.substituteAll {
         src = ./configs/nginx.conf;
         inherit (config) domain web_root;
@@ -27,7 +29,7 @@
         inherit (config) nginxPkg;
       };
 
-      # 2. Package the master script
+      # 2. Package the master script with configurations baked into it
       masterScript = pkgs.substituteAll {
         src = ./scripts/manage-nginx.sh;
         isExecutable = true;
@@ -45,6 +47,7 @@
         writeNginxConf = nginxConfDrv;
         writeNginxService = nginxServiceDrv;
 
+        # Ultra-short, optimized wrappers passing parameters to the compiled master script executable
         install_nginx        = pkgs.writeShellScriptBin "install-nginx"        "${masterScript} install";
         refresh_nginx        = pkgs.writeShellScriptBin "refresh-nginx"        "${masterScript} refresh";
         update_nginx_conf    = pkgs.writeShellScriptBin "update-nginx-conf"    "${masterScript} update-conf";
@@ -54,5 +57,3 @@
       };
     };
 }
-
-# nix run --impure .#command
